@@ -1,9 +1,9 @@
-# AI Landscape — Interactive Guide
+<img width="1484" height="452" alt="image" src="https://github.com/user-attachments/assets/552c0d7f-b945-4425-8b46-80e1ed53721d" /># AI Landscape — Interactive Guide
 
 A visual, interactive map to understand how modern AI tools actually fit together.
 
 ## Live Demo
-https://你的用户名.github.io/ai-landscape-demo/
+https://wuwei0772.github.io/ai-landscape-demo/
 
 ## What you’ll get
 Instead of scattered concepts, this shows:
