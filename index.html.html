@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>2026 AI 知识体系全景</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f7f5ef;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #1f1e1d;
+  }
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 24px 14px 40px;
+  }
+  .canvas {
+    background: #fffdf8;
+    border: 1px solid rgba(31,30,29,.12);
+    border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(31,30,29,.08);
+    padding: 14px;
+    overflow: auto;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  g[onclick] { cursor: pointer; }
+  g[onclick] rect { transition: transform .18s ease, filter .18s ease; transform-box: fill-box; transform-origin: center; }
+  g[onclick]:hover rect { transform: translateY(-2px); filter: drop-shadow(0 4px 6px rgba(0,0,0,.12)); }
+
+  .qa-panel {
+    position: fixed;
+    top: 76px;
+    width: min(330px, calc(50vw - 28px));
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+    background: rgba(255,253,248,.98);
+    border: 1px solid rgba(31,30,29,.14);
+    border-radius: 18px;
+    box-shadow: 0 18px 50px rgba(31,30,29,.16);
+    padding: 16px;
+    z-index: 10;
+    display: none;
+    backdrop-filter: blur(8px);
+  }
+  .qa-panel.left { left: 18px; }
+  .qa-panel.right { right: 18px; }
+  .qa-panel.show { display: block; }
+  .qa-kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #8a6b2e;
+    margin: 0 0 6px;
+  }
+  .qa-title {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.35;
+    color: #1f1e1d;
+    margin: 0 20px 10px 0;
+  }
+  .qa-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #2d2b28;
+  }
+  .qa-body p { margin: 0 0 10px; }
+  .qa-body strong { color: #1f1e1d; }
+  .close-action {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 999px;
+    background: #ece7da;
+    color: #1f1e1d;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 28px;
+  }
+  g.active-node rect { filter: drop-shadow(0 0 7px rgba(138,107,46,.45)); stroke-width: 2px; }
+  @media (max-width: 1120px) {
+    .qa-panel { position: fixed; left: 14px !important; right: 14px !important; width: auto; max-height: 38vh; }
+    .qa-panel.left { top: auto; bottom: 51vh; }
+    .qa-panel.right { top: auto; bottom: 18px; }
+  }
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    background: rgba(31,30,29,.92);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+  }
+  .toast.show { opacity: 1; }
+
+/* Clean QA cards: no instructional labels, stable product-demo layout */
+.qa-panel { max-height: 38vh; overflow-y: auto; }
+.qa-panel .qa-body p { margin: 0 0 10px; line-height: 1.75; }
+.qa-panel .qa-body p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="canvas">
+<svg width="100%" viewBox="0 0 680 1600" role="img" style="" xmlns="http://www.w3.org/2000/svg">
+<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">2026 AI 知识体系全景（含核心概念词典）</title>
+<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">五大板块：基础大模型、AI 编程工具、内容创作、搜索与研究、核心概念词典</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- ══ HEADER ══ -->
+<text x="340" y="28" text-anchor="middle" font-size="17" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:auto">2026 AI 知识体系全景</text>
+<text x="340" y="46" text-anchor="middle" opacity="0.45" font-size="10" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">仅收录现存活跃产品 · 点击节点生成追问</text>
+<line x1="40" y1="54" x2="640" y2="54" stroke="var(--b)" stroke-width="0.5" opacity="0.3" style="fill:rgb(0, 0, 0);stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ══════════════════════════════════
+     § 1  基础大模型  c-purple
+     ══════════════════════════════════ -->
+<rect x="40" y="64" width="110" height="20" rx="4" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="95" y="78" text-anchor="middle" font-size="10" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">基础大模型</text>
+
+<!-- Row 1: x=40,252,464  w=194,194,176 -->
+<g onclick="sendPrompt('介绍 OpenAI GPT-5 和 o3/o4-mini 推理模型的特点')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="92" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="137" y="113" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">GPT-5 / o3 / o4-mini</text>
+  <text x="137" y="133" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">OpenAI</text>
+  <text x="137" y="149" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">行业标杆 · 推理旗舰</text>
+</g>
+<g onclick="sendPrompt('介绍 Anthropic Claude 4.5 的特点与定位')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="252" y="92" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="349" y="113" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Claude 4.5 / Opus / Sonnet</text>
+  <text x="349" y="133" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Anthropic</text>
+  <text x="349" y="149" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">AI 安全 · 长上下文</text>
+</g>
+<g onclick="sendPrompt('Google Gemini 3 Ultra 和 Flash 分别适合什么场景')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="464" y="92" width="176" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="552" y="113" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Gemini 3 Ultra / Flash</text>
+  <text x="552" y="133" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Google DeepMind</text>
+  <text x="552" y="149" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">多模态 · 最深技术栈</text>
+</g>
+
+<!-- Row 2 -->
+<g onclick="sendPrompt('xAI Grok 3 实时网络能力和 X 平台整合有什么特点')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="170" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="137" y="191" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Grok 3 / Grok 3 mini</text>
+  <text x="137" y="211" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">xAI（Musk）</text>
+  <text x="137" y="227" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">实时网络 · X 平台整合</text>
+</g>
+<g onclick="sendPrompt('Meta Llama 4 开源策略对全球 AI 生态的影响')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="252" y="170" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="349" y="191" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Llama 4 Scout / Maverick</text>
+  <text x="349" y="211" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Meta</text>
+  <text x="349" y="227" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">开源旗手 · 私有部署</text>
+</g>
+<g onclick="sendPrompt('DeepSeek V4 如何以极低成本实现顶级推理')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="464" y="170" width="176" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="552" y="191" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">DeepSeek V4 / R2</text>
+  <text x="552" y="211" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">DeepSeek</text>
+  <text x="552" y="227" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">极低成本 · 顶级推理</text>
+</g>
+
+<!-- Row 3 -->
+<g onclick="sendPrompt('Kimi K2 的超长上下文窗口适合哪些任务')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="248" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="137" y="269" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Kimi K2 / Kimi 1.5</text>
+  <text x="137" y="289" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Moonshot AI</text>
+  <text x="137" y="305" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">超长记忆 · 长文档处理</text>
+</g>
+<g onclick="sendPrompt('豆包 Doubao 在中文办公、内容创作和教育场景中的优势是什么')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="252" y="248" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="349" y="269" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">豆包 / Doubao</text>
+  <text x="349" y="289" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">字节跳动 / ByteDance</text>
+  <text x="349" y="305" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(83, 74, 183);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">中文生态 · 办公创作</text>
+</g>
+
+<line x1="40" y1="326" x2="640" y2="326" stroke="var(--b)" stroke-width="0.5" opacity="0.2" style="fill:rgb(0, 0, 0);stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.2;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ══════════════════════════════════
+     § 2  AI 编程工具  c-green
+     ══════════════════════════════════ -->
+<rect x="40" y="336" width="110" height="20" rx="4" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="95" y="350" text-anchor="middle" font-size="10" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">AI 编程工具</text>
+
+<g onclick="sendPrompt('Claude Code 终端原生 Agent 和普通 Claude 有何不同')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="364" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="137" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Claude Code</text>
+  <text x="137" y="405" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Anthropic</text>
+  <text x="137" y="421" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">终端原生 · 最强编程 Agent</text>
+</g>
+<g onclick="sendPrompt('GitHub Copilot 如何深度集成进开发工作流')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="252" y="364" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="349" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">GitHub Copilot</text>
+  <text x="349" y="405" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Microsoft / GitHub</text>
+  <text x="349" y="421" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">IDE 集成 · 覆盖最广</text>
+</g>
+<g onclick="sendPrompt('Cursor IDE 的 Vibe Coding 体验是什么')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="464" y="364" width="176" height="64" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="552" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Cursor</text>
+  <text x="552" y="405" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Anysphere</text>
+  <text x="552" y="421" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">AI 原生 IDE · Vibe Coding</text>
+</g>
+
+<g onclick="sendPrompt('Windsurf 的 Flow 全库感知体验是什么')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="442" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="137" y="463" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Windsurf</text>
+  <text x="137" y="483" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Codeium</text>
+  <text x="137" y="499" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">全库感知 · 流式编辑</text>
+</g>
+<g onclick="sendPrompt('Gemini CLI 终端编程工具的特点是什么')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="252" y="442" width="194" height="64" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="349" y="463" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Gemini CLI</text>
+  <text x="349" y="483" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Google</text>
+  <text x="349" y="499" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">终端编程 · 免费额度大</text>
+</g>
+<g onclick="sendPrompt('Amazon Q Developer 在 AWS 生态中的角色')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="464" y="442" width="176" height="64" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="552" y="463" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Amazon Q Developer</text>
+  <text x="552" y="483" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Amazon / AWS</text>
+  <text x="552" y="499" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(59, 109, 17);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">云端 · 企业安全合规</text>
+</g>
+
+<line x1="40" y1="520" x2="640" y2="520" stroke="var(--b)" stroke-width="0.5" opacity="0.2" style="fill:rgb(0, 0, 0);stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.2;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ══════════════════════════════════
+     § 3  内容创作  c-coral
+     ══════════════════════════════════ -->
+<rect x="40" y="530" width="110" height="20" rx="4" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="95" y="544" text-anchor="middle" font-size="10" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">内容创作</text>
+
+<text x="40" y="566" font-size="10" opacity="0.5" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">文生图</text>
+<!-- 4 boxes: w=139 gap=14 → x:40,193,346,499 -->
+<g onclick="sendPrompt('Midjourney v7 的艺术审美特点')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="574" width="139" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="109" y="595" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Midjourney v7</text>
+  <text x="109" y="615" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Midjourney Inc.</text>
+  <text x="109" y="630" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">艺术审美领先</text>
+</g>
+<g onclick="sendPrompt('DALL-E 4 在文字排版方面有何进步')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="193" y="574" width="139" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="262" y="595" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">DALL-E 4</text>
+  <text x="262" y="615" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">OpenAI</text>
+  <text x="262" y="630" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">语义排版 · 文字呈现</text>
+</g>
+<g onclick="sendPrompt('Flux.2 的写实风格与开源定位')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="346" y="574" width="139" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="415" y="595" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Flux.2</text>
+  <text x="415" y="615" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Black Forest Labs</text>
+  <text x="415" y="630" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">极致写实 · 开源</text>
+</g>
+<g onclick="sendPrompt('Google Imagen 4 的细节还原优势')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="499" y="574" width="141" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="569" y="595" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Imagen 4</text>
+  <text x="569" y="615" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Google DeepMind</text>
+  <text x="569" y="630" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">细节还原 · 准确</text>
+</g>
+
+<text x="40" y="656" font-size="10" opacity="0.5" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">文生视频</text>
+<g onclick="sendPrompt('Sora 叙事一致性为何最强')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="664" width="139" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="109" y="685" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Sora</text>
+  <text x="109" y="705" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">OpenAI</text>
+  <text x="109" y="720" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">叙事一致 · 物理逻辑</text>
+</g>
+<g onclick="sendPrompt('Google Veo 3 的音画同步能力')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="193" y="664" width="139" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="262" y="685" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Veo 3</text>
+  <text x="262" y="705" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Google DeepMind</text>
+  <text x="262" y="720" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">音画同步 · 长视频</text>
+</g>
+<g onclick="sendPrompt('Runway Gen-4.5 专业镜头控制有什么价值')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="346" y="664" width="139" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="415" y="685" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Gen-4.5</text>
+  <text x="415" y="705" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Runway</text>
+  <text x="415" y="720" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">专业镜头控制</text>
+</g>
+<g onclick="sendPrompt('快手可灵 2.0 的物理真实感有哪些细节')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="499" y="664" width="141" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="569" y="685" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">可灵 2.0</text>
+  <text x="569" y="705" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">快手</text>
+  <text x="569" y="720" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">物理互动 · 真实感</text>
+</g>
+
+<text x="40" y="746" font-size="10" opacity="0.5" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">语音与音乐</text>
+<!-- 3 boxes: w=191 gap=18 → x:40,249,458 -->
+<g onclick="sendPrompt('ElevenLabs 语音克隆和情感合成效果如何')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="754" width="191" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="135" y="775" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">ElevenLabs</text>
+  <text x="135" y="795" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">ElevenLabs Inc.</text>
+  <text x="135" y="811" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">语音克隆 · 情感合成</text>
+</g>
+<g onclick="sendPrompt('GPT-4o 实时语音模式和传统语音助手有何不同')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="249" y="754" width="191" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="344" y="775" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">GPT-4o Voice</text>
+  <text x="344" y="795" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">OpenAI</text>
+  <text x="344" y="811" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">实时对话 · 多语言</text>
+</g>
+<g onclick="sendPrompt('Suno 和 Udio 哪个更适合专业音乐人')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="458" y="754" width="182" height="64" rx="8" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="549" y="775" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Suno / Udio</text>
+  <text x="549" y="795" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Suno AI / Udio</text>
+  <text x="549" y="811" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(153, 60, 29);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">AI 音乐创作</text>
+</g>
+
+<line x1="40" y1="832" x2="640" y2="832" stroke="var(--b)" stroke-width="0.5" opacity="0.2" style="fill:rgb(0, 0, 0);stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.2;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ══════════════════════════════════
+     § 4  搜索与研究  c-teal
+     ══════════════════════════════════ -->
+<rect x="40" y="842" width="110" height="20" rx="4" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="95" y="856" text-anchor="middle" font-size="10" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">搜索与研究</text>
+
+<g onclick="sendPrompt('Perplexity Pro 多源实证搜索和 Google 的本质区别')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="870" width="191" height="64" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="135" y="891" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Perplexity Pro</text>
+  <text x="135" y="911" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Perplexity AI</text>
+  <text x="135" y="927" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">多源实证 · LLM 中转站</text>
+</g>
+<g onclick="sendPrompt('Google AI Overviews 如何改变十亿用户的搜索体验')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="249" y="870" width="191" height="64" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="344" y="891" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">AI Overviews</text>
+  <text x="344" y="911" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Google Search</text>
+  <text x="344" y="927" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">搜索 AI 化 · 十亿用户</text>
+</g>
+<g onclick="sendPrompt('Microsoft Copilot Search 和 Office 365 整合程度如何')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="458" y="870" width="182" height="64" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="549" y="891" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">Copilot Search</text>
+  <text x="549" y="911" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Microsoft / Bing</text>
+  <text x="549" y="927" text-anchor="middle" dominant-baseline="central" font-size="10" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Office 深度整合</text>
+</g>
+<g onclick="sendPrompt('Google NotebookLM 的播客生成功能如何工作')" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="40" y="948" width="600" height="50" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="340" y="966" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central">NotebookLM</text>
+  <text x="340" y="986" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">Google · 上传文档即可对话，自动生成播客摘要</text>
+</g>
+
+<line x1="40" y1="1014" x2="640" y2="1014" stroke="var(--b)" stroke-width="0.5" opacity="0.2" style="fill:rgb(0, 0, 0);stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.2;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ══════════════════════════════════
+     § 5  核心概念词典  按九宫格重排
+     布局：3行×3列，LLM 作为底层核心概念
+     ══════════════════════════════════ -->
+<rect x="40" y="1024" width="120" height="20" rx="4" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="100" y="1038" text-anchor="middle" font-size="10" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">核心概念词典</text>
+
+<!-- Row 1: LLM / Chat / API -->
+<g onclick="sendPrompt('LLM 是什么，为什么它是 AI 产品的底层核心')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="40" y="1052" width="186" height="96" rx="8" stroke-width="0.5" style="fill:rgb(245, 244, 237);stroke:rgba(31, 30, 29, 0.3);stroke-width:0.5px;"/>
+  <text x="133" y="1074" text-anchor="middle" dominant-baseline="central" style="fill:rgb(20, 20, 19);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">LLM 大语言模型</text>
+  <text x="133" y="1096" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">AI 产品的底层大脑</text>
+  <text x="133" y="1113" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">理解 · 生成 · 推理</text>
+  <text x="133" y="1130" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">典型：GPT-5 / Claude</text>
+</g>
+<line x1="226" y1="1100" x2="242" y2="1100" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" fill="none" style="fill:none;stroke:rgb(136, 135, 128);stroke-width:1px;opacity:0.85;"/>
+<g onclick="sendPrompt('Chat 类 AI 产品到底是什么，适合处理哪些任务')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="244" y="1052" width="186" height="96" rx="8" stroke-width="0.5" style="fill:rgb(245, 244, 237);stroke:rgba(31, 30, 29, 0.3);stroke-width:0.5px;"/>
+  <text x="337" y="1074" text-anchor="middle" dominant-baseline="central" style="fill:rgb(20, 20, 19);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">Chat 对话产品</text>
+  <text x="337" y="1096" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">像聊天一样使用 AI</text>
+  <text x="337" y="1113" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">问答 · 写作 · 解释</text>
+  <text x="337" y="1130" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">典型：ChatGPT / Claude</text>
+</g>
+<line x1="430" y1="1100" x2="446" y2="1100" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" fill="none" style="fill:none;stroke:rgb(136, 135, 128);stroke-width:1px;opacity:0.85;"/>
+<g onclick="sendPrompt('用一个实际例子解释 AI 时代 API 接口的工作原理')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="448" y="1052" width="192" height="96" rx="8" stroke-width="0.5" style="fill:rgb(245, 244, 237);stroke:rgba(31, 30, 29, 0.3);stroke-width:0.5px;"/>
+  <text x="544" y="1074" text-anchor="middle" dominant-baseline="central" style="fill:rgb(20, 20, 19);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">API 接口</text>
+  <text x="544" y="1096" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">连接“智力”与“应用”的管道</text>
+  <text x="544" y="1113" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">开发者按 Token 用量付费</text>
+  <text x="544" y="1130" text-anchor="middle" dominant-baseline="central" style="fill:rgb(61, 61, 58);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">任意软件接入 GPT-5 / Claude</text>
+</g>
+
+<!-- Row 2: Vibe Coding / Context Window / Skill -->
+<g onclick="sendPrompt('什么是 Vibe Coding，它如何改变了开发方式')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="40" y="1174" width="186" height="96" rx="8" stroke-width="0.5" style="fill:rgb(253, 241, 222);stroke:rgb(196, 128, 45);stroke-width:0.5px;"/>
+  <text x="133" y="1196" text-anchor="middle" dominant-baseline="central" style="fill:rgb(129, 73, 10);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">Vibe Coding</text>
+  <text x="133" y="1218" text-anchor="middle" dominant-baseline="central" style="fill:rgb(148, 89, 18);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">感觉编程</text>
+  <text x="133" y="1235" text-anchor="middle" dominant-baseline="central" style="fill:rgb(148, 89, 18);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">描述意图 → AI 生成代码</text>
+  <text x="133" y="1252" text-anchor="middle" dominant-baseline="central" style="fill:rgb(148, 89, 18);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">无需纠结语法细节</text>
+</g>
+<line x1="226" y1="1222" x2="242" y2="1222" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" fill="none" style="fill:none;stroke:rgb(136, 135, 128);stroke-width:1px;opacity:0.85;"/>
+<g onclick="sendPrompt('上下文窗口 Context Window 是什么，2026 年有多大')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="244" y="1174" width="186" height="96" rx="8" stroke-width="0.5" style="fill:rgb(230, 241, 251);stroke:rgb(24, 95, 165);stroke-width:0.5px;"/>
+  <text x="337" y="1196" text-anchor="middle" dominant-baseline="central" style="fill:rgb(12, 68, 124);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">Context Window</text>
+  <text x="337" y="1218" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">上下文窗口</text>
+  <text x="337" y="1235" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">百万级 Token</text>
+  <text x="337" y="1252" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">相当于一次读完上百本书</text>
+</g>
+<line x1="430" y1="1222" x2="446" y2="1222" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" fill="none" style="fill:none;stroke:rgb(136, 135, 128);stroke-width:1px;opacity:0.85;"/>
+<g onclick="sendPrompt('AI Skill 技能和模型微调 Fine-tuning 是什么关系')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="448" y="1174" width="192" height="96" rx="8" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.5px;"/>
+  <text x="544" y="1196" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">Skill 技能</text>
+  <text x="544" y="1218" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">模型大脑内化的能力</text>
+  <text x="544" y="1235" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">通过微调获得</text>
+  <text x="544" y="1252" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">无需外部工具即可执行</text>
+</g>
+
+<!-- Row 3: Agent / Plug-in / IDE -->
+<g onclick="sendPrompt('Agent 是什么，它和普通 Chat 最大区别在哪里')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="40" y="1296" width="186" height="96" rx="8" stroke-width="0.5" style="fill:rgb(230, 241, 251);stroke:rgb(24, 95, 165);stroke-width:0.5px;"/>
+  <text x="133" y="1318" text-anchor="middle" dominant-baseline="central" style="fill:rgb(12, 68, 124);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">Agent 智能体</text>
+  <text x="133" y="1340" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">能连续执行任务的 AI</text>
+  <text x="133" y="1357" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">规划 · 调工具 · 自我修正</text>
+  <text x="133" y="1374" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">典型：Claude Code / Codex</text>
+</g>
+<line x1="226" y1="1344" x2="242" y2="1344" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" fill="none" style="fill:none;stroke:rgb(136, 135, 128);stroke-width:1px;opacity:0.85;"/>
+<g onclick="sendPrompt('AI Plug-in 插件和 Skill 技能有什么区别，各自适合什么')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="244" y="1296" width="186" height="96" rx="8" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5px;"/>
+  <text x="337" y="1318" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">Plug-in 插件</text>
+  <text x="337" y="1340" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">模型手里的工具箱</text>
+  <text x="337" y="1357" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">调用第三方服务</text>
+  <text x="337" y="1374" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">汇率计算 · 机票预订</text>
+</g>
+<line x1="430" y1="1344" x2="446" y2="1344" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" fill="none" style="fill:none;stroke:rgb(136, 135, 128);stroke-width:1px;opacity:0.85;"/>
+<g onclick="sendPrompt('IDE 是什么，为什么 Cursor 和 VS Code 都属于开发环境')" style="cursor:pointer;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">
+  <rect x="448" y="1296" width="192" height="96" rx="8" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);stroke-width:0.5px;"/>
+  <text x="544" y="1318" text-anchor="middle" dominant-baseline="central" style="fill:rgb(43, 83, 13);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central">IDE 开发环境</text>
+  <text x="544" y="1340" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">写代码的工作台</text>
+  <text x="544" y="1357" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">编辑 · 运行 · 调试</text>
+  <text x="544" y="1374" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59, 109, 17);stroke:none;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:central">典型：VS Code / Cursor</text>
+</g>
+
+<!-- ══ LEGEND ══ -->
+<line x1="40" y1="1402" x2="640" y2="1402" stroke="var(--b)" stroke-width="0.5" opacity="0.2" style="fill:rgb(0, 0, 0);stroke:rgba(31, 30, 29, 0.3);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.2;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"><rect x="40" y="1412" width="12" height="12" rx="2" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/></g>
+<text x="58" y="1422" font-size="11" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">基础大模型</text>
+<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"><rect x="155" y="1412" width="12" height="12" rx="2" stroke-width="0.5" style="fill:rgb(234, 243, 222);stroke:rgb(59, 109, 17);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/></g>
+<text x="173" y="1422" font-size="11" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">AI 编程工具</text>
+<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"><rect x="270" y="1412" width="12" height="12" rx="2" stroke-width="0.5" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/></g>
+<text x="288" y="1422" font-size="11" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">内容创作</text>
+<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"><rect x="365" y="1412" width="12" height="12" rx="2" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/></g>
+<text x="383" y="1422" font-size="11" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">搜索与研究</text>
+<g style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"><rect x="468" y="1412" width="12" height="12" rx="2" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);color:rgb(0, 0, 0);stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/></g>
+<text x="486" y="1422" font-size="11" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">核心概念</text>
+
+<text x="340" y="1450" text-anchor="middle" font-size="10" opacity="0.35" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">2026 · 仅含现存活跃产品 · 点击节点查看内置问答</text>
+</svg>
+    </section>
+  </main>
+  <aside id="qaLeft" class="qa-panel left" aria-live="polite">
+    <button class="close-action" onclick="closeQA()" aria-label="关闭">×</button>
+    <p class="qa-kicker">追问</p>
+    <h2 id="qaQuestion" class="qa-title"></h2>
+    <div id="qaAnswer" class="qa-body"></div>
+  </aside>
+  <aside id="qaRight" class="qa-panel right" aria-live="polite">
+    <button class="close-action" onclick="closeQA()" aria-label="关闭">×</button>
+    <div id="qaUse" class="qa-body"></div>
+  </aside>
+  <div id="toast" class="toast">已展示内置答案</div>
+<script>
+let activeQuestion = '';
+let activeNode = null;
+const qaData = {
+  "介绍 OpenAI GPT-5 和 o3/o4-mini 推理模型的特点": [
+    "OpenAI 系列的核心优势通常在于通用能力、工具生态和推理任务覆盖面。GPT 类模型更像全能型大脑，适合写作、分析、代码、图像理解和复杂任务拆解；o 系列推理模型更强调慢思考，适合数学、代码调试、规划和多步骤判断。",
+    "选择时不要只看模型名。日常办公、教学设计、内容改写用 GPT 类更顺手；需要严谨推理、排错、复杂决策时，优先考虑推理模型。"
+  ],
+  "介绍 Anthropic Claude 4.5 的特点与定位": [
+    "Claude 的定位是长文本理解、复杂写作、代码协作和安全边界较强的通用助手。它通常擅长读长文档、改文章、做结构化分析，也很适合把粗糙想法打磨成清晰表达。",
+    "把 Claude 当成耐心的编辑和代码搭档更合适。对教学材料、课程方案、长篇反馈、产品文案，它的价值往往比单纯问答更明显。"
+  ],
+  "Google Gemini 3 Ultra 和 Flash 分别适合什么场景": [
+    "Ultra 代表更强能力，适合高难度推理、多模态分析和复杂项目；Flash 代表更快、更便宜，适合高频问答、批量处理、简单摘要和轻量自动化。",
+    "粗暴理解：Ultra 用来解决难题，Flash 用来跑流程。做产品时常见组合是 Flash 处理大量普通请求，Ultra 处理少量关键任务。"
+  ],
+  "xAI Grok 3 实时网络能力和 X 平台整合有什么特点": [
+    "Grok 的亮点是和 X 平台的信息流结合紧密，适合追踪热点、舆论、梗文化和快速变化的话题。它更像一个贴近实时社交语境的 AI，而不只是知识库问答。",
+    "如果任务依赖最新网络讨论，Grok 有优势；如果任务需要稳定、严谨、可引用的研究，仍要交叉验证来源。"
+  ],
+  "Meta Llama 4 开源策略对全球 AI 生态的影响": [
+    "Llama 的关键价值不是单一聊天产品，而是开源或开放权重带来的生态扩散。开发者和企业可以基于它私有化部署、微调、降成本，并减少对单一闭源厂商的依赖。",
+    "它更像 AI 世界的基础零件。对公司来说，Llama 的意义在于可控、可改、可部署，而不只是网页聊天体验。"
+  ],
+  "DeepSeek V4 如何以极低成本实现顶级推理": [
+    "DeepSeek 的标签通常是高性价比推理。它通过模型结构、训练策略和工程优化，把较强的数学、代码和逻辑能力做得更便宜。",
+    "真正的启发是：AI 竞争不只拼最大模型，也拼效率。对普通用户来说，低成本意味着更多人能用到高级推理能力。"
+  ],
+  "Kimi K2 的超长上下文窗口适合哪些任务": [
+    "超长上下文的价值是一次性读入大量材料，例如论文、合同、课程资料、会议记录、代码库或整本书。它适合做跨文档总结、信息抽取、对比分析和长材料问答。",
+    "但上下文长不等于一定理解深。重要任务仍要让它分段总结、列依据、做交叉检查，避免把大量材料直接丢进去就期待完美答案。"
+  ],
+  "豆包 Doubao 在中文办公、内容创作和教育场景中的优势是什么": [
+    "豆包的优势主要在中文语境、内容生产、办公辅助和教育场景的本土化体验。它更贴近中文表达习惯，也更容易服务短视频脚本、中文文案、课堂内容和日常办公。",
+    "如果你的任务主要发生在中文生态里，比如教研、家长沟通、中文营销、短视频内容，豆包会比很多海外工具更接地气。"
+  ],
+  "Claude Code 终端原生 Agent 和普通 Claude 有何不同": [
+    "普通 Claude 主要在聊天窗口里回答你；Claude Code 更像能进入项目文件、理解代码库、执行修改和跑命令的编程 Agent。差别不在模型本身，而在它能不能直接操作开发环境。",
+    "非技术用户可以这样理解：Chat 是顾问，Claude Code 是能进厨房动手做菜的厨师。它适合真实项目开发，不只是解释代码。"
+  ],
+  "GitHub Copilot 如何深度集成进开发工作流": [
+    "Copilot 的优势是嵌入 GitHub 和主流 IDE，能在写代码、补全函数、生成测试、解释错误、处理 PR 时提供帮助。它不是单独的聊天机器人，而是开发流程里的辅助层。",
+    "适合已经在 GitHub 工作流里的团队。它的价值在于减少切换成本，让 AI 出现在你本来就写代码和审代码的地方。"
+  ],
+  "Cursor IDE 的 Vibe Coding 体验是什么": [
+    "Cursor 是带 AI 的代码编辑器。所谓 Vibe Coding，就是你用自然语言描述目标，让 AI 读项目、改文件、生成代码，你再通过运行和反馈不断校正。",
+    "它适合从 Demo 到原型的快速搭建。要做长期项目，仍需要学会基本工程概念，比如版本管理、环境变量、数据库和部署。"
+  ],
+  "Windsurf 的 Flow 全库感知体验是什么": [
+    "Windsurf 强调 Flow，也就是让 AI 持续理解整个代码库和你的开发意图。它试图减少你反复解释背景的成本，让 AI 更像跟着项目上下文一起工作的搭档。",
+    "它适合代码文件多、上下文复杂的项目。判断一个 AI IDE 好不好，关键看它是否真的理解项目结构，而不是只会改当前文件。"
+  ],
+  "Gemini CLI 终端编程工具的特点是什么": [
+    "CLI 工具运行在终端里，适合直接和文件、命令、脚本、Git、测试流程互动。Gemini CLI 这类工具把模型能力带到开发者最底层的工作界面。",
+    "它更适合有一点技术基础的人。非技术用户先用 Cursor 或 Bolt 更直观；等理解项目结构后，再学 CLI 会更稳。"
+  ],
+  "Amazon Q Developer 在 AWS 生态中的角色": [
+    "Amazon Q Developer 是 AWS 里的开发与云服务助手，重点服务代码生成、云资源理解、故障排查、安全建议和 AWS 文档问答。",
+    "如果项目部署在 AWS，它的价值会明显变大；如果你不用 AWS，它就不一定是首选。它本质上是云厂商生态里的 AI 工作助手。"
+  ],
+  "Midjourney v7 的艺术审美特点": [
+    "Midjourney 的核心优势是审美和风格化图像，尤其适合海报、概念图、插画、视觉探索和高质感创意图。它常常不用非常复杂的提示词，也能生成有艺术感的画面。",
+    "它适合先找视觉方向，不一定最适合严肃商业交付。需要稳定角色、精确文字、品牌规范时，要结合后期编辑工具。"
+  ],
+  "DALL-E 4 在文字排版方面有何进步": [
+    "DALL-E 系列的优势通常是和 ChatGPT 结合紧密，能更好理解自然语言需求，并在图像中处理文字、构图和具体修改。文字排版能力越强，就越适合海报、封面、信息图和教学图片。",
+    "对你做课程海报、词汇图、课堂视觉材料很有用。关键是把文字、位置、风格和受众说清楚。"
+  ],
+  "Flux.2 的写实风格与开源定位": [
+    "Flux 的看点是高质量写实图像和相对开放的生态。写实能力适合人物、产品、场景图；开放生态则方便开发者部署、微调和接入自己的工作流。",
+    "如果你要做可控的商业图像流程，开放模型很有价值；如果只是偶尔出图，网页工具更省事。"
+  ],
+  "Google Imagen 4 的细节还原优势": [
+    "Imagen 系列强调高质量图像生成和细节还原，尤其适合自然场景、产品质感、人物细节和复杂画面。它的优势来自 Google 的多模态研究和图像理解能力。",
+    "适合追求真实感和细节的图片任务。做教学图时，要注意别让细节喧宾夺主，学习目标比画面炫技更重要。"
+  ],
+  "Sora 叙事一致性为何最强": [
+    "视频生成最难的是时间一致性：人物、动作、镜头、物体关系不能一秒一个样。Sora 的强项在于更稳定地维持场景和叙事，让视频像一个连续片段，而不是一组图片拼接。",
+    "适合广告分镜、故事短片、课程情境视频和视觉原型。但真正商用仍要考虑版权、可控性和后期剪辑。"
+  ],
+  "Google Veo 3 的音画同步能力": [
+    "Veo 的亮点在视频生成和多模态整合，音画同步意味着画面动作、环境声音、说话节奏或音乐氛围能更自然地配合。",
+    "这对短视频、广告、课程片头很重要。视频不只是画面好看，声音和节奏才决定它像不像成品。"
+  ],
+  "Runway Gen-4.5 专业镜头控制有什么价值": [
+    "Runway 的价值在于更接近专业视频制作流程，例如镜头运动、画面控制、风格延续和剪辑工作流。它不只是生成视频，也服务创作者后期制作。",
+    "适合需要导演感和镜头语言的项目。简单说，Sora 偏生成能力，Runway 更偏创作者工具链。"
+  ],
+  "快手可灵 2.0 的物理真实感有哪些细节": [
+    "可灵的看点是动作、物理、人物和现实场景的自然度。例如物体移动、衣服摆动、人物走路、镜头运动是否符合真实世界规律。",
+    "中文短视频生态里，可灵的实用性很强。做口播、剧情、教学场景视频时，真实感会直接影响观众是否出戏。"
+  ],
+  "ElevenLabs 语音克隆和情感合成效果如何": [
+    "ElevenLabs 的优势是自然语音、情绪表达、多语言配音和声音克隆。它能把文字变成更像真人说话的音频，而不是机械朗读。",
+    "适合课程旁白、听力材料、角色对话和短视频配音。教育场景要注意版权和授权，不要随便克隆真实人物声音。"
+  ],
+  "GPT-4o 实时语音模式和传统语音助手有何不同": [
+    "传统语音助手通常是命令式：你说一句，它执行一个固定任务。实时语音 AI 更像对话伙伴，能理解上下文、语气、打断、追问和多轮互动。",
+    "对语言学习特别有价值，因为它能陪练口语、纠错、模拟面试、扮演考官，而不是只回答天气或闹钟。"
+  ],
+  "Suno 和 Udio 哪个更适合专业音乐人": [
+    "Suno 更偏大众化和快速成歌，适合短视频、灵感草稿和非专业用户。Udio 往往更受关注于音乐细节、结构和声音质感，可能更适合有音乐判断力的人继续打磨。",
+    "专业音乐人不会只看能不能生成歌，而会看可控性、版权、分轨、风格稳定和后期空间。"
+  ],
+  "Perplexity Pro 多源实证搜索和 Google 的本质区别": [
+    "Google 给你网页列表，你自己判断；Perplexity 更像研究助理，会综合多个来源，直接生成带引用的答案。它的优势是把搜索、阅读和摘要合在一起。",
+    "适合做快速研究、竞品调研、新闻追踪和概念扫盲。但引用不等于绝对正确，关键结论仍要点开来源验证。"
+  ],
+  "Google AI Overviews 如何改变十亿用户的搜索体验": [
+    "AI Overviews 把搜索从链接列表推向直接答案。用户不一定先点网页，而是先看到 AI 整理后的摘要、步骤或结论。",
+    "这会改变内容创作和 SEO：未来不是只争排名，还要让内容足够清晰、权威、结构化，能被 AI 摘要正确引用。"
+  ],
+  "Microsoft Copilot Search 和 Office 365 整合程度如何": [
+    "Microsoft Copilot Search 的价值在于和 Office、Teams、Outlook、OneDrive 等企业数据结合。它不只是搜网页，而是帮你搜公司内部文档、邮件、会议和文件。",
+    "适合企业办公场景。它的关键不是模型多聪明，而是能不能安全地访问你的工作资料并给出可追溯答案。"
+  ],
+  "Google NotebookLM 的播客生成功能如何工作": [
+    "NotebookLM 是资料型 AI 笔记工具。你上传材料后，它基于这些材料回答问题、总结重点，还能把资料转成类似播客的对话讲解。",
+    "非常适合学习论文、课程资料、报告和书籍。它的优势是受资料约束，不容易像普通聊天模型那样自由发挥。"
+  ],
+  "LLM 是什么，为什么它是 AI 产品的底层核心": [
+    "LLM 是 Large Language Model，大语言模型。它不是一个 App，而是很多 AI 产品背后的底层大脑：Chat 产品用它对话，IDE 用它写代码，Agent 用它规划和执行任务。",
+    "可以把 LLM 理解成发动机，而 ChatGPT、Cursor、Claude Code、豆包这些产品是不同形态的车。真正重要的是：你要分清‘模型能力’和‘产品形态’，否则很容易把工具名字和底层概念混在一起。"
+  ],
+  "用一个实际例子解释 AI 时代 API 接口的工作原理": [
+    "API 就像餐厅点餐窗口。你的应用把请求发给 AI 服务，例如‘把这段英文改成 B2 水平’，AI 服务处理后返回结果。用户看到的是网页按钮，背后其实是程序在和模型通信。",
+    "做产品 Demo 时，API 是把 ChatGPT、豆包或 Gemini 接进你自己网页的桥。没有 API，你只能手动复制粘贴；有 API，功能就能自动运行。"
+  ],
+  "AI Skill 技能和模型微调 Fine-tuning 是什么关系": [
+    "Skill 更像给 AI 一套可执行的方法和流程，例如如何批改 FCE 作文；Fine-tuning 是改变模型参数，让模型长期学会某种风格或任务。前者轻，后者重。",
+    "多数个人和小团队先做 Skill，不要急着微调。因为好提示词、好流程、好知识库，通常已经能解决 80% 的问题。"
+  ],
+  "AI Plug-in 插件和 Skill 技能有什么区别，各自适合什么": [
+    "Skill 是能力方法，告诉 AI 怎么做；Plug-in 是外部工具，帮 AI 连接真实世界，比如查日历、发邮件、读数据库、调用翻译接口。",
+    "简单说，Skill 解决‘会不会’，Plug-in 解决‘能不能接触外部系统’。两者合起来，AI 才能从会聊天变成会办事。"
+  ],
+  "什么是 Vibe Coding，它如何改变了开发方式": [
+    "Vibe Coding 是用自然语言驱动开发：你描述想法，AI 生成和修改代码，你通过试用、反馈、迭代来推进。它降低了从想法到 Demo 的门槛。",
+    "但它不是魔法。越往后越需要工程基本功，比如版本控制、测试、权限、数据库和部署。AI 能加速，但不能替你理解产品责任。"
+  ],
+  "上下文窗口 Context Window 是什么，2026 年有多大": [
+    "上下文窗口就是模型一次能看见的信息量，包括你的问题、历史对话、上传文本和系统指令。窗口越大，模型一次能处理的材料越多。",
+    "但大窗口不是万能。高质量输入、清晰任务、分段处理、让模型引用依据，通常比单纯追求更大窗口更重要。"
+  ],
+  "Skill、Plug-in 和 API 三者如何串联才能最大化 AI 能力": [
+    "API 负责连接模型，Plug-in 负责连接外部工具，Skill 负责规定做事方法。三者串起来，AI 才能按正确流程调用正确工具，完成真实任务。",
+    "例子：作文批改产品可以用 API 调模型，用 Skill 固定评分标准，用 Plug-in 读取学生作业和写入反馈表。"
+  ],
+  "Chat 类 AI 产品到底是什么，适合处理哪些任务": [
+    "Chat 类产品是以对话为入口的 AI 工具，比如 ChatGPT、Claude、豆包。它适合问答、写作、改稿、解释概念、头脑风暴、学习陪练和轻量分析。",
+    "它的优势是低门槛；限制是不能天然操作你的文件系统、代码库或业务后台。要办复杂事情，就要接工具、插件、API 或 Agent。"
+  ],
+  "IDE 是什么，为什么 Cursor 和 VS Code 都属于开发环境": [
+    "IDE 是集成开发环境，简单说就是写代码、看文件、运行程序、调试错误、管理项目的工作台。VS Code 是通用代码编辑器，Cursor 是在类似编辑器基础上深度加入 AI。",
+    "非技术用户可以把 IDE 理解成开发者的 Obsidian 加 Excel 加命令台。它不是只写字，而是管理整个软件项目。"
+  ],
+  "Agent 是什么，它和普通 Chat 最大区别在哪里": [
+    "Agent 是能围绕目标自主规划、调用工具、执行步骤并根据结果调整的 AI。普通 Chat 主要回答；Agent 更偏行动。",
+    "区别可以这样记：Chat 给建议，Agent 做任务。比如 Chat 告诉你怎么部署网站，Agent 可以读项目、改配置、运行命令、检查报错。"
+  ]
+};
+
+function esc(text) {
+  return String(text || '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function sendPrompt(text) {
+  const node = event && event.currentTarget ? event.currentTarget : null;
+  if (activeQuestion === text) {
+    closeQA();
+    return;
+  }
+  activeQuestion = text;
+  if (activeNode) activeNode.classList.remove('active-node');
+  activeNode = node;
+  if (activeNode) activeNode.classList.add('active-node');
+
+  const item = qaData[text] || [
+    '这个节点对应一个 AI 产品或基础概念。核心学习方式是先弄清它解决什么问题，再比较它和相近工具的边界。',
+    '建议把它放进具体任务里理解：写作、搜索、编程、出图、视频、语音或自动化。脱离任务谈工具，很容易越学越乱。'
+  ];
+  document.getElementById('qaQuestion').textContent = text;
+  document.getElementById('qaAnswer').innerHTML = '<p>' + esc(item[0]) + '</p>';
+  document.getElementById('qaUse').innerHTML = '<p>' + esc(item[1]) + '</p>';
+  document.getElementById('qaLeft').classList.add('show');
+  document.getElementById('qaRight').classList.add('show');
+  showToast('已展示内置答案');
+}
+
+function closeQA() {
+  document.getElementById('qaLeft').classList.remove('show');
+  document.getElementById('qaRight').classList.remove('show');
+  if (activeNode) activeNode.classList.remove('active-node');
+  activeQuestion = '';
+  activeNode = null;
+}
+
+function showToast(message) {
+  const el = document.getElementById('toast');
+  el.textContent = message || '已展示内置答案';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1600);
+}
+</script>
+</body>
+</html>
