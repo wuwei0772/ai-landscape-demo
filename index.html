@@ -44,7 +44,6 @@
     .tagline{font-size:15px;font-weight:480;line-height:1.75;margin:0;color:inherit;opacity:.96;}
     .icon{width:32px;height:32px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid rgba(31,30,29,.16);display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-bottom:4px;}
     .icon svg{width:18px;height:18px;display:block;overflow:visible;}
-    .icon img{width:18px;height:18px;display:block;object-fit:contain;border-radius:4px;}
     .cogtag{display:inline-flex;align-items:center;justify-content:center;min-height:22px;padding:3px 10px;margin:4px 0 2px;border-radius:999px;background:rgba(255,255,255,.68);border:1px solid rgba(31,30,29,.12);font-size:12px;font-weight:750;line-height:1.35;color:inherit;white-space:nowrap;}
     .concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 22px;}
     .concept-grid .card{min-height:170px;padding:26px 22px;cursor:pointer;}
@@ -58,11 +57,12 @@
     .qa-kicker{font-size:12px;font-weight:800;letter-spacing:.05em;color:#8a6b2e;margin:0 0 8px;}
     .qa-title{font-size:18px;font-weight:800;line-height:1.45;margin:0 34px 12px 0;}
     .qa-body{font-size:15px;line-height:1.85;color:#2d2b28;}
-    .qa-body p{margin:0 0 12px;}.qa-body p:last-child{margin-bottom:0}.qa-body strong{color:#1f1e1d;}
+    .qa-body p{margin:0 0 12px;}.qa-body p:last-child{margin-bottom:0}
     @media(max-width:900px){.page{padding:22px 18px}.grid,.grid.four,.concept-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid.two{max-width:none}.card{min-height:168px}.qa-panel{left:14px;right:14px;top:auto;bottom:16px;width:auto;max-height:48vh}}
     @media(max-width:560px){body{padding:10px 8px}.page{border-radius:16px;padding:18px 12px}.grid,.grid.two,.grid.four,.concept-grid{grid-template-columns:1fr;gap:16px}.card{min-height:168px;padding:22px 20px}.concept-grid .card{min-height:150px}.title{font-size:19px}.company,.tagline{font-size:16px}.section-title{width:100%}h1{font-size:22px}}
   </style>
 </head>
+
 <body>
   <main class="page">
     <header>
@@ -74,14 +74,23 @@
       <h2 class="section-title">基础大模型 · 底层大脑层</h2>
       <div class="grid">
         <button class="card" data-q="GPT-5 / o3 / o4-mini"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#111827"/><circle cx="12" cy="4.5" r="2.2" fill="#111827"/><circle cx="18.5" cy="8" r="2.2" fill="#111827"/><circle cx="18.5" cy="16" r="2.2" fill="#111827"/><circle cx="12" cy="19.5" r="2.2" fill="#111827"/><circle cx="5.5" cy="16" r="2.2" fill="#111827"/><circle cx="5.5" cy="8" r="2.2" fill="#111827"/></svg></span><div class="cogtag">通用大脑</div><div class="title">GPT-5 / o3 / o4-mini</div><div class="company">OpenAI</div><div class="tagline">行业标杆 · 推理旗舰</div></button>
+
         <button class="card" data-q="Claude 4.5 / Opus / Sonnet"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4.8 20h4.1L12 8.9 15.1 20h4.1L12 3Z" fill="#111827"/></svg></span><div class="cogtag">长文推理</div><div class="title">Claude 4.5 / Opus / Sonnet</div><div class="company">Anthropic</div><div class="tagline">AI 安全 · 长上下文</div></button>
-        <button class="card" data-q="Gemini 3 Ultra / Flash"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 8.8 13H12v-4h13" fill="none" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/><path d="M5.4 5.3a9.4 9.4 0 0 1 13.2.2" fill="none" stroke="#EA4335" stroke-width="3" stroke-linecap="round"/><path d="M3.1 14.9a9.3 9.3 0 0 1 0-5.8" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round"/><path d="M5.6 18.8a9.4 9.4 0 0 0 8.4 2.3" fill="none" stroke="#34A853" stroke-width="3" stroke-linecap="round"/></svg></span><div class="cogtag">多模态中枢</div><div class="title">Gemini 3 Ultra / Flash</div><div class="company">Google DeepMind</div><div class="tagline">多模态 · 最深技术栈</div></button>
+
+        <button class="card" data-q="Gemini 3 Ultra / Flash"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 8.8 13H12v-4h13" fill="none" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/></svg></span><div class="cogtag">多模态中枢</div><div class="title">Gemini 3 Ultra / Flash</div><div class="company">Google DeepMind</div><div class="tagline">多模态 · 最深技术栈</div></button>
+
         <button class="card" data-q="Grok 3 / Grok 3 mini"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 18 18 6M8 6l10 12" stroke="#111827" stroke-width="2.6" stroke-linecap="round"/></svg></span><div class="cogtag">实时网络</div><div class="title">Grok 3 / Grok 3 mini</div><div class="company">xAI（Musk）</div><div class="tagline">实时网络 · X 平台整合</div></button>
+
         <button class="card" data-q="Llama 4 Scout / Maverick"><span class="icon"><svg viewBox="0 0 24 24"><path d="M3 13c3-7 6-7 9 0s6 7 9 0" fill="none" stroke="#111827" stroke-width="2.5" stroke-linecap="round"/><path d="M3 13c3 7 6 7 9 0s6-7 9 0" fill="none" stroke="#111827" stroke-width="2.5" stroke-linecap="round" opacity=".55"/></svg></span><div class="cogtag">开源底座</div><div class="title">Llama 4 Scout / Maverick</div><div class="company">Meta</div><div class="tagline">开源旗手 · 私有部署</div></button>
+
         <button class="card" data-q="DeepSeek V4 / R2"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 12c1-5 5-8 10-7 3 .6 5 3 5 6 0 4-3 7-8 8-3 .6-6-.3-8-3" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round"/><circle cx="14.5" cy="10" r="1.4" fill="#111827"/></svg></span><div class="cogtag">低成本推理</div><div class="title">DeepSeek V4 / R2</div><div class="company">DeepSeek</div><div class="tagline">极低成本 · 顶级推理</div></button>
+
         <button class="card" data-q="Kimi K2 / Kimi 1.5"><span class="icon"><svg viewBox="0 0 24 24"><path d="M15.5 4.5A8.5 8.5 0 1 0 20 16.8 7 7 0 0 1 15.5 4.5Z" fill="#745cff"/></svg></span><div class="cogtag">长文档记忆</div><div class="title">Kimi K2 / Kimi 1.5</div><div class="company">Moonshot AI</div><div class="tagline">超长记忆 · 长文档处理</div></button>
+
         <button class="card" data-q="豆包 / Doubao"><span class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="5" fill="#7c3aed"/><circle cx="9" cy="11" r="1.4" fill="#fff"/><circle cx="15" cy="11" r="1.4" fill="#fff"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span><div class="cogtag">中文生态</div><div class="title">豆包 / Doubao</div><div class="company">字节跳动 / ByteDance</div><div class="tagline">中文生态 · 办公创作</div></button>
+
         <button class="card" data-q="通义千问 / Qwen"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#1677ff" stroke-width="2.2"/><path d="M8 12.3c0-2.5 1.8-4.2 4.1-4.2s4.1 1.7 4.1 4.2-1.8 4.2-4.1 4.2c-.8 0-1.5-.2-2.1-.6l-1.6 1.3 1-2c-.9-.7-1.4-1.7-1.4-2.9Z" fill="#1677ff"/><circle cx="12.1" cy="12.3" r="1.5" fill="#fff"/></svg></span><div class="cogtag">中文开源</div><div class="title">通义千问 / Qwen</div><div class="company">阿里云 / Alibaba Cloud</div><div class="tagline">开源生态 · 企业应用</div></button>
+
         <button class="card" data-q="GLM 5.1"><span class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5" fill="#111827"/><path d="M8 9.5h8M8 14.5h5" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="14.5" r="1.5" fill="#fff"/></svg></span><div class="cogtag">国产大模型</div><div class="title">GLM 5.1</div><div class="company">智谱 AI / Zhipu AI</div><div class="tagline">中文推理 · Agent 能力</div></button>
       </div>
     </section>
@@ -89,59 +98,88 @@
     <section class="section green">
       <h2 class="section-title">AI 编程工具 · 构建执行层</h2>
       <p class="subhead">把想法变成代码并真正运行</p>
+
       <p class="subhead" style="margin-top:10px">IDE（你自己写代码）</p>
       <div class="grid four">
         <button class="card" data-q="VS Code"><span class="icon"><svg viewBox="0 0 24 24"><path d="M17.8 3.5 9.3 10.2 4.8 6.8 3 8.1l4.2 3.9L3 15.9l1.8 1.3 4.5-3.4 8.5 6.7c1.3.9 3.2 0 3.2-1.6V5.1c0-1.6-1.9-2.5-3.2-1.6Z" fill="#007ACC"/></svg></span><div class="cogtag">工作台 IDE</div><div class="title">VS Code</div><div class="company">Microsoft</div><div class="tagline">你写代码 · AI 补全修改</div></button>
+
         <button class="card" data-q="Cursor"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 3 19 12 13 13.5 10 21 6 3Z" fill="#111827"/></svg></span><div class="cogtag">AI 原生 IDE</div><div class="title">Cursor</div><div class="company">Anysphere</div><div class="tagline">全库协作 · Vibe Coding</div></button>
+
         <button class="card" data-q="Trae"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 5h14v4H14v10h-4V9H5V5Z" fill="#111827"/><path d="M14 9h5v10h-5z" fill="#2563eb" opacity=".85"/></svg></span><div class="cogtag">AI 编程 IDE</div><div class="title">Trae</div><div class="company">字节跳动</div><div class="tagline">中文友好 · AI 辅助开发</div></button>
+
         <button class="card" data-q="Replit"><span class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="6" height="6" rx="1.2" fill="#F26207"/><rect x="13" y="5" width="6" height="6" rx="1.2" fill="#F26207"/><rect x="5" y="13" width="6" height="6" rx="1.2" fill="#F26207"/><rect x="13" y="13" width="6" height="6" rx="1.2" fill="#F26207"/></svg></span><div class="cogtag">云端 IDE</div><div class="title">Replit</div><div class="company">Replit</div><div class="tagline">写代码 · 运行 · 发布</div></button>
       </div>
+
       <p class="subhead" style="margin-top:24px">AI 编程 Agent（AI帮你干活）</p>
       <div class="grid two">
         <button class="card" data-q="Claude Code"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4.8 20h4.1L12 8.9 15.1 20h4.1L12 3Z" fill="#111827"/></svg></span><div class="cogtag">终端执行者</div><div class="title">Claude Code</div><div class="company">Anthropic</div><div class="tagline">终端原生 · 最强编程 Agent</div></button>
+
         <button class="card" data-q="Codex"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#111827"/><circle cx="12" cy="4.5" r="2.2" fill="#111827"/><circle cx="18.5" cy="8" r="2.2" fill="#111827"/><circle cx="18.5" cy="16" r="2.2" fill="#111827"/><circle cx="12" cy="19.5" r="2.2" fill="#111827"/><circle cx="5.5" cy="16" r="2.2" fill="#111827"/><circle cx="5.5" cy="8" r="2.2" fill="#111827"/></svg></span><div class="cogtag">代码代理</div><div class="title">Codex</div><div class="company">OpenAI</div><div class="tagline">任务驱动 · 代码生成与修改</div></button>
       </div>
+
       <p class="subhead" style="margin-top:24px">构建与部署（让代码上线）</p>
       <div class="grid two">
         <button class="card" data-q="GitHub"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3.6a8.5 8.5 0 0 0-2.7 16.6c.4.1.6-.2.6-.4v-1.6c-2.3.5-2.8-1-2.8-1-.4-.9-.9-1.1-.9-1.1-.7-.5.1-.5.1-.5.8.1 1.3.9 1.3.9.8 1.3 2.1.9 2.6.7.1-.6.3-.9.5-1.1-1.9-.2-3.8-.9-3.8-4.1 0-.9.3-1.6.8-2.2-.1-.2-.4-1 .1-2.2 0 0 .7-.2 2.3.8.7-.2 1.3-.3 2-.3s1.4.1 2 .3c1.6-1 2.3-.8 2.3-.8.5 1.2.2 2 .1 2.2.5.6.8 1.3.8 2.2 0 3.2-1.9 3.9-3.8 4.1.3.3.6.8.6 1.6v2.1c0 .2.2.5.6.4A8.5 8.5 0 0 0 12 3.6Z" fill="#111827"/></svg></span><div class="cogtag">代码仓库</div><div class="title">GitHub</div><div class="company">GitHub / Microsoft</div><div class="tagline">版本管理 · 协作入口</div></button>
+
         <button class="card" data-q="Vercel"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5 21 20H3L12 5Z" fill="#111827"/></svg></span><div class="cogtag">前端部署</div><div class="title">Vercel</div><div class="company">Vercel</div><div class="tagline">网站上线 · 产品发布</div></button>
       </div>
-      <p class="subhead" style="margin-top:24px">工作流工具（不用写代码）</p>
-      <div class="grid two">
+
+      <p class="subhead" style="margin-top:24px">工作流工具与开发平台（不用写代码 / 低代码接入）</p>
+      <div class="grid">
         <button class="card" data-q="Coze / 扣子"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 7.5A3.5 3.5 0 0 1 8.5 4h7A3.5 3.5 0 0 1 19 7.5v5A3.5 3.5 0 0 1 15.5 16H12l-4.5 4v-4A3.5 3.5 0 0 1 4 12.5v-5Z" fill="#0ea5e9"/><circle cx="9" cy="10" r="1" fill="#fff"/><circle cx="12" cy="10" r="1" fill="#fff"/><circle cx="15" cy="10" r="1" fill="#fff"/></svg></span><div class="cogtag">Agent 搭建</div><div class="title">Coze / 扣子</div><div class="company">ByteDance</div><div class="tagline">Bot · 插件 · 工作流</div></button>
+
         <button class="card" data-q="Antigravity"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 5 12h5l-2 9 11-12h-6l2-6h-3Z" fill="#111827"/></svg></span><div class="cogtag">Agentic 开发</div><div class="title">Antigravity</div><div class="company">Google</div><div class="tagline">AI 工作区 · 原型构建</div></button>
+
+        <button class="card" data-q="Google AI Studio"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 8.8 13H12v-4h13" fill="none" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/><path d="M7.2 8.2h9.6M7.2 12h6.4M7.2 15.8h8.2" stroke="#34A853" stroke-width="1.8" stroke-linecap="round"/></svg></span><div class="cogtag">模型开发平台</div><div class="title">Google AI Studio</div><div class="company">Google</div><div class="tagline">调用 Gemini · 测试 API</div></button>
       </div>
     </section>
 
     <section class="section coral">
       <h2 class="section-title">内容创作 · 生成表达层</h2>
+
       <p class="subhead">产品设计与原型</p>
       <div class="grid two">
         <button class="card" data-q="Figma"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="3" fill="#F24E1E"/><circle cx="15" cy="6" r="3" fill="#FF7262"/><circle cx="9" cy="12" r="3" fill="#A259FF"/><circle cx="15" cy="12" r="3" fill="#1ABCFE"/><circle cx="9" cy="18" r="3" fill="#0ACF83"/></svg></span><div class="cogtag">设计协作</div><div class="title">Figma</div><div class="company">Figma</div><div class="tagline">UI 设计 · 原型协作</div></button>
+
         <button class="card" data-q="Pixso"><span class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="4" fill="#6d5dfc"/><path d="M9 8h4.8c2 0 3.2 1.1 3.2 2.8s-1.2 2.8-3.2 2.8H11v2.4H9V8Z" fill="#fff"/><path d="M11 9.8v2h2.6c.8 0 1.3-.4 1.3-1s-.5-1-1.3-1H11Z" fill="#6d5dfc"/></svg></span><div class="cogtag">国产设计平台</div><div class="title">Pixso</div><div class="company">博思云创 / Pixso</div><div class="tagline">在线设计 · 团队协作</div></button>
       </div>
+
       <p class="subhead" style="margin-top:24px">文生图</p>
       <div class="grid four">
         <button class="card" data-q="Midjourney v7"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 15c5-10 9 3 16-7-1 7-5 11-11 11-2 0-4-.7-5-4Z" fill="#111827"/></svg></span><div class="cogtag">审美引擎</div><div class="title">Midjourney v7</div><div class="company">Midjourney Inc.</div><div class="tagline">艺术审美领先</div></button>
+
         <button class="card" data-q="GPT Image"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#111827"/><circle cx="12" cy="4.5" r="2.2" fill="#111827"/><circle cx="18.5" cy="8" r="2.2" fill="#111827"/><circle cx="18.5" cy="16" r="2.2" fill="#111827"/><circle cx="12" cy="19.5" r="2.2" fill="#111827"/><circle cx="5.5" cy="16" r="2.2" fill="#111827"/><circle cx="5.5" cy="8" r="2.2" fill="#111827"/></svg></span><div class="cogtag">对话修图</div><div class="title">GPT Image</div><div class="company">OpenAI</div><div class="tagline">对话式编辑 · 文本准确</div></button>
+
         <button class="card" data-q="Nano Banana"><span class="icon"><svg viewBox="0 0 24 24"><path d="M7 17c4-1 8-5 10-10 2 5 0 10-4 12-2 1-5 .6-6-2Z" fill="#facc15" stroke="#854d0e" stroke-width="1.4"/><path d="M10 16c2-2 4-5 5-8" fill="none" stroke="#854d0e" stroke-width="1.5" stroke-linecap="round"/></svg></span><div class="cogtag">图像编辑模型</div><div class="title">Nano Banana</div><div class="company">Google / Gemini</div><div class="tagline">自然语言修图 · 细节控制</div></button>
-        <button class="card" data-q="Lovart"><span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAMAAAC6CgRnAAAAeFBMVEUAAAD///////////////////////////////////8AAAD8/PwGBga/v79SUlIXFxf5+fnx8fHg4ODExMRnZ2diYmL09PTm5ubJycnGxsZOTk4VFRXs7OxXV1dISEjT09OkpKTMzMy1tbWYmJiVlZU8PDweHh4MDAx0PtpDAAAACXRSTlMA38+/YCAQgH+jjz42AAABCElEQVQoz33S2XKDMAwFUAUIVPLCvgeS7v//h/Uixg7t9D6A0fGMPUgAkL+keE6Sgc31gn/lcjUWqJnVNAbMIfMrUWtJNnIZhC8VkDjBjkJ6dJqCp5XilB6dYSmfTK54mOjpnE6wDXH182MjSVSzLRG92qPMW7NFh2nUVKIikt5GCmlv5vGozKNxNpnVW9u+U7fTA23ZbpidKbO6VVVLoqVvrPo77qainM3EEYrkV43VZi8wOWsiCxnDPc/G90R92H3fjn0LW83f7s/yemATvkEybpNgQ1xPfShdlftXPreI+5d67OMGeUqg4HkZFp4XXfO8ZJCHORsnNTdhzv6dT5ss+SVpkQP8AFQiHpXagJyRAAAAAElFTkSuQmCC" alt="Lovart"></span><div class="cogtag">AI设计 Agent</div><div class="title">Lovart</div><div class="company">Lovart</div><div class="tagline">品牌视觉 · 海报设计</div></button>
-        <button class="card" data-q="即梦 / Jimeng"><span class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="4" fill="#ff5c7a"/><circle cx="9" cy="11" r="2" fill="#fff"/><path d="M12 16l2.7-3.2 2.3 3.2H12Z" fill="#fff" opacity=".95"/><path d="M6.8 17h10.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".85"/></svg></span><div class="cogtag">中文视觉</div><div class="title">即梦 / Jimeng</div><div class="company">字节跳动 / ByteDance</div><div class="tagline">调用 Seedream 模型 · 图像设计</div></button>
+
+        <button class="card" data-q="Lovart"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 4l2.3 5 5.4.5-4.1 3.6 1.2 5.3L12 15.7l-4.8 2.7 1.2-5.3-4.1-3.6 5.4-.5L12 4Z" fill="#111827"/></svg></span><div class="cogtag">AI设计 Agent</div><div class="title">Lovart</div><div class="company">Lovart</div><div class="tagline">品牌视觉 · 海报设计</div></button>
+
+        <button class="card" data-q="即梦 / Jimeng"><span class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="4" fill="#ff5c7a"/><circle cx="9" cy="11" r="2" fill="#fff"/><path d="M12 16l2.7-3.2 2.3 3.2H12Z" fill="#fff" opacity=".95"/></svg></span><div class="cogtag">中文视觉</div><div class="title">即梦 / Jimeng</div><div class="company">字节跳动 / ByteDance</div><div class="tagline">调用 Seedream 模型 · 图像设计</div></button>
+
         <button class="card" data-q="Imagen 4"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 8.8 13H12v-4h13" fill="none" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/></svg></span><div class="cogtag">真实细节</div><div class="title">Imagen 4</div><div class="company">Google DeepMind</div><div class="tagline">细节还原 · 准确</div></button>
       </div>
+
       <p class="subhead" style="margin-top:24px">文生视频</p>
       <div class="grid four">
         <button class="card" data-q="Sora"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#111827"/><circle cx="12" cy="4.5" r="2.2" fill="#111827"/><circle cx="18.5" cy="8" r="2.2" fill="#111827"/><circle cx="18.5" cy="16" r="2.2" fill="#111827"/><circle cx="12" cy="19.5" r="2.2" fill="#111827"/><circle cx="5.5" cy="16" r="2.2" fill="#111827"/><circle cx="5.5" cy="8" r="2.2" fill="#111827"/></svg></span><div class="cogtag">视频叙事</div><div class="title">Sora</div><div class="company">OpenAI</div><div class="tagline">叙事一致 · 物理逻辑</div></button>
+
         <button class="card" data-q="Veo 3"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 8.8 13H12v-4h13" fill="none" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/></svg></span><div class="cogtag">音画视频</div><div class="title">Veo 3</div><div class="company">Google DeepMind</div><div class="tagline">音画同步 · 长视频</div></button>
+
         <button class="card" data-q="Gen-4.5"><span class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="3" fill="#111827"/><path d="m10 9 5 3-5 3V9Z" fill="#fff"/></svg></span><div class="cogtag">专业镜头</div><div class="title">Gen-4.5</div><div class="company">Runway</div><div class="tagline">专业镜头控制</div></button>
-        <button class="card" data-q="可灵 2.0"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 8h9l5 4-5 4H5V8Z" fill="#f97316"/><circle cx="9" cy="12" r="2" fill="#fff"/><path d="M14 10l3 2-3 2v-4Z" fill="#fff"/></svg></span><div class="cogtag">真实动作</div><div class="title">可灵 2.0</div><div class="company">快手</div><div class="tagline">物理互动 · 真实感</div></button>
+
+        <button class="card" data-q="可灵 2.0"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 8h9l5 4-5 4H5V8Z" fill="#f97316"/><circle cx="9" cy="12" r="2" fill="#fff"/></svg></span><div class="cogtag">真实动作</div><div class="title">可灵 2.0</div><div class="company">快手</div><div class="tagline">物理互动 · 真实感</div></button>
+
         <button class="card" data-q="Hailuo"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 4c4.4 0 8 3 8 6.8 0 5.1-4.5 9.2-10 9.2-3.8 0-6-2.2-6-5.3 0-2.4 1.6-4.2 3.9-4.2 2.6 0 4.2 2.2 3.3 4.5 2.7-.5 4.6-2.3 4.6-4.3 0-2.1-1.9-3.5-4.4-3.5-2.2 0-4 1.1-5.4 2.6" fill="none" stroke="#f97316" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="cogtag">视频生成</div><div class="title">Hailuo</div><div class="company">MiniMax</div><div class="tagline">文生视频 · 图生视频</div></button>
+
         <button class="card" data-q="Seedance"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 17c5-1 6-5 9-10 3 3 4 6 5 10H5Z" fill="#f59e0b"/><path d="M8 16c3-2 5-4 7-7" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg></span><div class="cogtag">短视频生成</div><div class="title">Seedance</div><div class="company">ByteDance</div><div class="tagline">短视频 · 中文生态</div></button>
       </div>
+
       <p class="subhead" style="margin-top:24px">语音与音乐</p>
       <div class="grid four">
         <button class="card" data-q="ElevenLabs"><span class="icon"><svg viewBox="0 0 24 24"><rect x="7" y="5" width="4" height="14" rx="2" fill="#111827"/><rect x="13" y="5" width="4" height="14" rx="2" fill="#111827"/></svg></span><div class="cogtag">声音生成</div><div class="title">ElevenLabs</div><div class="company">ElevenLabs</div><div class="tagline">语音克隆 · 情感合成</div></button>
+
         <button class="card" data-q="Suno"><span class="icon"><svg viewBox="0 0 24 24"><path d="M8 6v9a3 3 0 1 1-2-2.8V8l10-2v8a3 3 0 1 1-2-2.8V4L8 6Z" fill="#111827"/></svg></span><div class="cogtag">歌曲生成</div><div class="title">Suno</div><div class="company">Suno AI</div><div class="tagline">歌曲生成 · 旋律完整</div></button>
+
         <button class="card" data-q="Udio"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0v2a5 5 0 0 1-10 0v-2a3 3 0 0 1 6 0v3" fill="none" stroke="#111827" stroke-width="2.5" stroke-linecap="round"/></svg></span><div class="cogtag">音乐创作</div><div class="title">Udio</div><div class="company">Udio</div><div class="tagline">音乐质感 · 编曲细腻</div></button>
       </div>
     </section>
@@ -150,6 +188,7 @@
       <h2 class="section-title">搜索与研究 · 资料验证层</h2>
       <div class="grid two">
         <button class="card" data-q="Perplexity Pro"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z" fill="none" stroke="#0f766e" stroke-width="2"/><path d="M6 12h12M12 4v16" stroke="#0f766e" stroke-width="2"/></svg></span><div class="cogtag">答案搜索引擎</div><div class="title">Perplexity Pro</div><div class="company">Perplexity AI</div><div class="tagline">多源实证 · LLM 中转站</div></button>
+
         <button class="card" data-q="NotebookLM"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z" fill="#fff" stroke="#0f766e" stroke-width="2"/><path d="M9 8h6M9 12h6M9 16h4" stroke="#0f766e" stroke-width="1.8" stroke-linecap="round"/></svg></span><div class="cogtag">资料型笔记</div><div class="title">NotebookLM</div><div class="company">Google</div><div class="tagline">上传文档即可对话 · 自动摘要</div></button>
       </div>
     </section>
@@ -168,6 +207,7 @@
         <button class="card" data-q="IDE"><div class="title">IDE 开发环境</div><div class="cogtag">代码工作台</div><div class="tagline">写代码的工作台<br>编辑 · 运行 · 调试<br>典型：VS Code / Cursor</div></button>
       </div>
     </section>
+
     <div class="legend">2026 · 产品层级 + 公司信息 + 认知标签 · 点击节点查看内置问答</div>
   </main>
 
@@ -180,10 +220,10 @@
 
   <script>
     const answers = {
-
       "GLM 5.1":["GLM 5.1 是智谱 AI 的大模型系列，偏中文理解、复杂推理和 Agent 应用。","它适合放在国产基础模型层：和 Qwen、DeepSeek、Kimi 一样，既是模型能力，也是国内 AI 生态的重要底座。"],
       "Figma":["Figma 是全球主流的在线 UI / UX 设计协作工具，用来做界面设计、产品原型、设计系统和团队协作。","它不是大模型，也不是编程 IDE，而是产品从想法走向界面的设计工作台。AI 时代里，Figma 的位置更像“设计入口”。"],
       "Pixso":["Pixso 是国产在线设计协作平台，定位接近 Figma，适合做 UI 设计、原型、设计交付和团队协作。","它的优势在中文团队、本土协作和国内工作流适配。可以把它理解为中国语境下的 Figma 类产品。"],
+      "Google AI Studio":["Google AI Studio 是 Google 提供的大模型开发平台，用来测试、调用和接入 Gemini 模型。","它的角色类似 OpenAI Playground：你可以写提示词、调参数、生成代码，并把模型能力接入自己的产品。简单说，Gemini 是大脑，Google AI Studio 是连接这个大脑的操作台。"],
 
       "VS Code":["VS Code 是经典代码工作台，本身不是 AI 产品，但可以通过 Copilot、插件和扩展接入 AI 能力。","它适合你真正开始管理项目文件、看目录结构、运行代码和做长期维护。"],
       "Trae":["Trae 更偏中文用户友好的 AI 编程环境，适合从自然语言描述需求开始，让 AI 帮你理解、生成和修改代码。","它可以放在 IDE 一类，因为核心仍然是写代码的工作台。"],
@@ -192,6 +232,7 @@
       "Vercel":["Vercel 是部署平台，尤其适合前端网站和产品 demo。你把代码连接上去，它负责构建、托管和生成可访问链接。","它和 GitHub Pages 都能上线网页，但 Vercel 更偏产品化部署和前端工程。"],
       "Antigravity":["Antigravity 更像 Agentic 开发工作区，强调让 AI 更主动地参与构建、理解和推进任务。","它容易和 IDE 混淆，因为它既像工作台，也像拼装器。"],
       "Hailuo":["Hailuo 是 MiniMax 旗下的视频生成工具，适合文生视频、图生视频和短视频创作。","它和可灵、Sora、Veo 属于同一层：核心输出是视频，而不是文字或代码。"],
+
       "GPT-5 / o3 / o4-mini":["OpenAI 系列可以理解为通用 AI 能力的主干：GPT 偏综合生成、对话和工具调用，o 系列偏复杂推理、数学、代码和多步分析。","学习时不要只问“哪个最强”，更应该问：这个任务需要速度、成本、推理深度，还是生态兼容性。"],
       "Claude 4.5 / Opus / Sonnet":["Claude 的优势常在长上下文、复杂写作、代码理解和安全对齐上。它特别适合处理长文档、课程材料、研究笔记和复杂项目说明。","如果你的任务需要稳定表达、长篇结构和反复修改，Claude 往往比单纯追求爆发力的模型更顺手。"],
       "Gemini 3 Ultra / Flash":["Gemini 的核心位置在 Google 生态：多模态、搜索、Android、Workspace 和云服务都能与模型结合。Ultra 偏高能力，Flash 偏速度和成本。","它的价值不只是模型本身，而是背后的 Google 技术栈和分发入口。"],
@@ -201,28 +242,32 @@
       "Kimi K2 / Kimi 1.5":["Kimi 的长文本处理能力很突出，适合读论文、报告、课程资料、合同和长篇文章。","它的学习价值在于：你可以把它当成一个“长文档阅读助手”，而不是普通聊天机器人。"],
       "豆包 / Doubao":["豆包背靠字节生态，在中文办公、内容生产、教育场景和多端入口上有明显优势。","如果你的主要任务是中文内容、短视频脚本、课件、运营材料或办公辅助，豆包值得重点关注。"],
       "通义千问 / Qwen":["通义千问是阿里推出的大模型体系，核心特点是开源生态与企业应用并行。","它既可以作为开源模型被开发者私有部署，也可以通过阿里云接入企业系统和业务流程。","如果说 GPT 更像全球通用标准，Claude 更偏长文写作和复杂推理，Qwen 更像中文企业场景与开源生态的结合体。"],
+
       "Claude Code":["Claude Code 是典型的编程 Agent：它不只是补全代码，而是能读项目、改文件、运行命令、修 bug，并围绕任务持续推进。","适合有项目结构后使用。非技术用户可以先用 Cursor 或 Coze 建立直观感，再逐步过渡到 Claude Code。"],
-      "GitHub Copilot":["Copilot 的优势是覆盖面广，和 GitHub、VS Code、企业开发流程结合很深。","它像一个嵌入在日常开发里的助手，适合长期稳定地提高写代码效率。"],
-      "Cursor":["Cursor 是 AI 原生 IDE，适合非技术用户从“改网页、改产品 demo、理解代码结构”开始。","它比传统 IDE 更像一个会解释、会改代码的工作台，适合学习编程和做小产品。"],
-      "Windsurf":["Windsurf 强调全库感知和流式编辑，适合在已有项目中连续修改多个文件。","它的优势不是单点代码补全，而是让 AI 更理解整个项目。"],
-      "Coze / 扣子":["Coze / 扣子适合搭建 Agent、工作流和轻量自动化应用。它比纯写代码门槛低，更接近“用模块拼一个 AI 应用”。","对非技术用户来说，它很适合做客服机器人、内容助手、课程助教、资料问答和自动化流程。"],
       "Codex":["Codex 可以理解为 OpenAI 体系里的代码代理：它把自然语言任务转成代码修改、测试和项目推进。","它适合从“让 AI 写一段代码”升级到“让 AI 围绕一个开发任务持续完成多步工作”。"],
+      "Cursor":["Cursor 是 AI 原生 IDE，适合非技术用户从“改网页、改产品 demo、理解代码结构”开始。","它比传统 IDE 更像一个会解释、会改代码的工作台，适合学习编程和做小产品。"],
+      "Coze / 扣子":["Coze / 扣子适合搭建 Agent、工作流和轻量自动化应用。它比纯写代码门槛低，更接近“用模块拼一个 AI 应用”。","对非技术用户来说，它很适合做客服机器人、内容助手、课程助教、资料问答和自动化流程。"],
+
       "Midjourney v7":["Midjourney 的优势是审美和风格控制，适合海报、概念图、艺术风格、视觉灵感和高质感图片。","它更像设计灵感引擎，不只是普通出图工具。"],
       "GPT Image":["GPT Image 的优势在对话式编辑和文本准确性。你可以通过自然语言逐步修改图片，而不是一次性赌提示词。","适合海报、小红书图、课程配图、产品 mockup 和多轮改图。"],
       "Nano Banana":["Nano Banana 是 Google / Gemini 体系里的图像生成与编辑能力，重点是用自然语言做可控修图、重构场景和保持细节一致。","它适合照片编辑、产品图、海报改稿、人物风格变化和需要多轮精修的视觉任务。"],
       "Lovart":["Lovart 更适合放在内容创作里的设计生成层。它不是单纯文生图，而是偏品牌视觉、海报、产品图和营销素材的 AI 设计 Agent。","如果 Nano Banana 更像图像编辑能力，Lovart 更像设计工作流：从想法到视觉方向，再到可用的商业素材。"],
       "即梦 / Jimeng":["即梦是面向中文内容创作的视觉产品入口，适合做图片、运营图、海报、课程视觉和社媒素材。","这里把 Seedream 标注为即梦调用的图像模型：即梦更像产品入口，Seedream 更像背后的生成能力。"],
       "Imagen 4":["Imagen 的优势在细节、真实感和语义一致性，适合对画面准确度要求较高的图像生成任务。","如果你重视画面清晰、物体关系和真实质感，它是重要参照。"],
+
       "Sora":["Sora 的看点是叙事一致性和物理逻辑：同一个人物、空间和动作在视频里更容易保持连贯。","它更适合广告、故事片段、产品概念片和高质量视觉叙事。"],
       "Veo 3":["Veo 的优势在视频生成与 Google 多模态生态的结合，尤其是音画同步、长视频和真实场景理解。","如果你关注视频模型的工业化能力，Veo 是一个重要方向。"],
       "Gen-4.5":["Runway 更偏专业创作者工作流，强调镜头、运动、风格和后期控制。","它不是只追求“生成一个视频”，而是服务真实视频制作流程。"],
       "可灵 2.0":["可灵的优势在物理互动、人物动作和中文内容生态。它适合短视频、剧情片段、产品展示和社媒视觉。","如果你做中文内容，可灵比很多海外工具更贴近本土平台需求。"],
       "Seedance":["Seedance 是字节在视频生成方向的重要产品，适合短视频、广告片段、内容营销和中文视频生态。","它的关键不是单个模型能力，而是和字节的内容生产、分发和创作者生态可能形成闭环。"],
+
       "ElevenLabs":["ElevenLabs 强在语音克隆、情绪表达和多语言语音合成。","适合配音、有声书、课程音频、角色声音和视频旁白。"],
       "Suno":["Suno 擅长从提示词生成完整歌曲，包括歌词、旋律和编曲。","它适合快速做 demo、短视频配乐、课堂活动和音乐创意实验。"],
       "Udio":["Udio 的优势在音乐质感、编曲细节和风格控制。","如果你更在意作品的音乐性，而不只是“能唱出来”，Udio 值得对比。"],
+
       "Perplexity Pro":["Perplexity 是搜索和 LLM 的结合体，适合快速查资料、对比来源、获得带引用的摘要。","它特别适合研究入口，但结论仍要看原文，不要只读摘要。"],
       "NotebookLM":["NotebookLM 是资料型 AI 笔记工具。你上传材料后，它基于这些材料回答问题、总结重点，还能生成类似播客的讲解。","它非常适合学习论文、课程资料、报告和书籍，因为它受资料约束，不容易像普通聊天模型那样自由发挥。"],
+
       "LLM":["LLM 是大语言模型，可以理解、生成和推理文本，也可以接入图片、音频、代码和工具。","它是许多 AI 产品背后的底层大脑。ChatGPT、Claude、豆包等产品，本质上都是把 LLM 包装成更容易使用的产品。"],
       "Chat":["Chat 是最直观的 AI 产品形态：用户像聊天一样提出问题，模型用自然语言回答。","它适合写作、解释、头脑风暴、翻译、教学和日常问答。"],
       "API":["API 是让软件调用模型能力的接口。普通用户在网页里聊天，开发者则通过 API 把模型接入自己的产品。","你可以把 API 理解为：把 AI 大脑接到任何应用上的管道。"],
@@ -238,20 +283,24 @@
     const title=document.getElementById('qaTitle');
     const body=document.getElementById('qaBody');
     let active=null;
+
     function showQA(card){
       const q=card.dataset.q;
       if(active===card){closeQA();return;}
       document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
-      active=card;card.classList.add('active');
+      active=card;
+      card.classList.add('active');
       title.textContent=q;
-      body.innerHTML=(answers[q]||["暂无解释。"] ).map(p=>`<p>${p}</p>`).join('');
+      body.innerHTML=(answers[q]||["暂无解释。"]).map(p=>`<p>${p}</p>`).join('');
       panel.classList.add('show');
     }
+
     function closeQA(){
       panel.classList.remove('show');
       document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
       active=null;
     }
+
     document.querySelectorAll('.card').forEach(card=>card.addEventListener('click',()=>showQA(card)));
     document.getElementById('closeBtn').addEventListener('click',closeQA);
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeQA();});
